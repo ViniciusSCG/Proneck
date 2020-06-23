@@ -14,7 +14,7 @@ export default class ExerciseScreen extends React.Component {
       BackHandler.addEventListener('hardwareBackPress', () => this.props.navigation.goBack());
   }
   async getapiData(){
-    let resp=await axios.get('http://192.168.56.1:3000/posts')
+    let resp = await axios.get('http://192.168.56.1:3000/exercises/id')
     console.log(resp.data)
     this.setState({data:resp.data})
   }
@@ -42,8 +42,10 @@ export default class ExerciseScreen extends React.Component {
                 }}
               >
                 <View style={styles.headerContainer}>
-                  <Image source={exer1}  style={{ alignSelf: "center", height: 170, width: 220 }}/>
-        
+                    {this.state.data.map((item)=>
+                      <Image source={{uri: item.gif_url}}  style={{ alignSelf: "center", height: 170, width: 220 }}/>
+                    )} 
+                
                 </View> 
                 <View style={styles.modal}>  
                   <CountdownCircle
@@ -69,27 +71,35 @@ export default class ExerciseScreen extends React.Component {
               </Modal>
                 
                 <View style={styles.headerContainer}>
+                
                   <Image source={logoInto} style={{ alignSelf: "center", height: 130, width: 202 }} />
-                  {this.state.data.map((item)=>
-                        <Image source={{uri: item.url}}  style={{ alignSelf: "center", height: 170, width: 220 }}/>)
+                  
+                  
                         
-                      } 
-                    {/* <Image source={exer1}  style={{ alignSelf: "center", height: 170, width: 220 }}/> */}
+                   {/* {this.state.data.map((item)=>
+                    <Image source={{uri: item.gif_url}}  style={{ alignSelf: "center", height: 170, width: 220 }}/>
+                  )}  */}
+                    
                 </View>
-
+                  {this.state.data.map((item)=>
+                      <Image source={{uri: item.gif_url}}  style={{ alignSelf: "center", height: 170, width: 220 }}/>
+                    )} 
                 
                 <View>
-                      {this.state.data.map((item)=>
-                        <Text style={{alignSelf: "center", fontSize: 18}}>
-                          {item.name}
-                        </Text>)
-                        
-                      } 
+                {this.state.data.map((item)=>
+                    <Text style={{paddingHorizontal: 15, textAlign: 'center', fontSize: 18, fontWeight: 'bold'}}>
+                      {item.name}
+                    </Text>
+                  )}
                 </View>
                 <View>
-                    
-                    <Text style={{paddingHorizontal: 15, fontSize: 18}}>Sente-se corretamente na cadeira com os pés apoiados no chão, gire sua cabeça para lateral, levando o queixo em direção ao ombro. Realizar o movimento para os dois lados.</Text>
+                {this.state.data.map((item)=>
+                    <Text style={{paddingHorizontal: 15, paddingTop: 10, fontSize: 18}}>
+                      {item.description}
+                    </Text>
+                  )}
                 </View>
+            
                 <TouchableOpacity style={styles.button} 
                 onPress={() =>{
                   this.setState({isVisible: true});

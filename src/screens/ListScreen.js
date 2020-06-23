@@ -13,12 +13,12 @@ import api from '../services/api';
 
 function SpotList({ exercise, navigation }){
 
-    const [posts, setExercise] = useState([])
+    const [exercises, setExercise] = useState([])
 
     useEffect(()=>{
         async function loadExercise()
     {
-        const response = await api.get('/posts', {
+        const response = await api.get('/exercises', {
             params: { exercise }
         })
         setExercise(response.data);
@@ -51,17 +51,15 @@ function SpotList({ exercise, navigation }){
                
                 <FlatList
                 style={styles.list}
-                data={posts}
+                data={exercises}
                 keyExtractor={PostExercise => PostExercise._id}
-                vertical
-                showsVerticalScrollIndicator={false}
                 renderItem={({ item })=>(
                 <View style={styles.lista}>
-                        <Text style={{ marginBottom: 10 }}>Lista de Exercicios</Text>
+                        {/* <Text style={{ marginBottom: 10 }}>Lista de Exercicios</Text> */}
                         <TouchableOpacity style={styles.button} 
                         onPress={() => navigation.navigate("Exercise")}
                         >
-                            <Image style={styles.image} source={{uri: item.url}}/>
+                        <Image style={styles.image} source={{uri: item.img_url}}/>
                             <Text style={styles.TextStyle}>{item.name}</Text>
                             
                         </TouchableOpacity>
